@@ -10,7 +10,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://ai-resume-classifier.vercel.app"
+      "https://ai-resume-classifier-1.onrender.com"
     ]
   })
 );
