@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import "./App.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [file, setFile] = useState(null);
@@ -32,10 +33,10 @@ function App() {
       const formData = new FormData();
       formData.append("resume", file);
 
-      const response = await axios.post(
-        "http://localhost:4000/upload",
-        formData
-      );
+     const response = await axios.post(
+  `${API_URL}/upload`,
+   formData
+   );
 
       setPrediction(response.data.prediction);
     } catch (error) {
