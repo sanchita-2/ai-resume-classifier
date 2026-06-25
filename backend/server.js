@@ -7,7 +7,13 @@ const fs = require("fs");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://ai-resume-classifier.vercel.app"
+    ]
+  })
+);
 app.use(express.json());
 
 const upload = multer({
@@ -46,11 +52,11 @@ app.post(
 
       const prediction =
         await axios.post(
-          "http://127.0.0.1:5000/predict",
-          {
-            resume: pdfData.text
-          }
-        );
+       "https://ai-resume-classifier-1.onrender.com/predict",
+       {
+        resume: pdfData.text
+        }
+       );
 
       res.json({
         prediction:
