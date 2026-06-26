@@ -34,9 +34,9 @@ function App() {
       formData.append("resume", file);
 
      const response = await axios.post(
-  `${API_URL}/upload`,
-   formData
-   );
+      `${API_URL}/upload`,
+       formData
+      );
 
       setPrediction(response.data.prediction);
     } catch (error) {

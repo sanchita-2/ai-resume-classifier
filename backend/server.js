@@ -10,7 +10,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://ai-resume-classifier-1.onrender.com"
+      "https://ai-resume-classifier.vercel.app/"
     ]
   })
 );
@@ -50,13 +50,20 @@ app.post(
       console.log("PDF TEXT LENGTH:");
       console.log(pdfData.text.length);
 
-      const prediction =
-        await axios.post(
-       "https://ai-resume-classifier-1.onrender.com/predict",
-       {
-        resume: pdfData.text
-        }
-       );
+    console.log("Calling ML server...");
+
+     const prediction = await axios.post(
+     "https://ai-resume-classifier-1.onrender.com/predict",
+     {
+      resume: pdfData.text
+      },
+     {
+      timeout: 60000
+     }
+    );
+
+console.log("ML Response:");
+console.log(prediction.data);
 
       res.json({
         prediction:
@@ -65,13 +72,22 @@ app.post(
 
     } catch (error) {
 
-      console.error("ERROR:");
-      console.error(error);
+  console.log("ERROR");
 
-      res.status(500).json({
-        message: error.message
-      });
-    }
+   if (error.response) {
+    console.log("Status:", error.response.status);
+    console.log(error.response.data);
+   } else if (error.request) {
+    console.log("No response from ML server");
+   } else {
+    console.log(error.message);
+   }
+
+  res.status(500).json({
+    message: error.message
+  });
+
+}
   }
 );
 
